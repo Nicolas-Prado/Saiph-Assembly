@@ -97,11 +97,21 @@ section .text
             jne parseAsciiToInt_loop_rightShiftCalcIntSize
 
         parseAsciiToInt_loopEnd_rightShiftCalcIntSize:
+        mov eax, ecx
+        mov ecx, 10
+        xor edx, edx
+        div ecx
+        inc eax
+        cmp edx, 0
+        je parseAsciiToInt_condition_notRemainder
+        inc eax
+        parseAsciiToInt_condition_notRemainder:
 
         ; Return values
         mov eax, ebx ; Int value
-        xor ebx, ebx ; Error desc
         mov edx, ecx ; Int size
+        xor ebx, ebx ; Error desc
+        xor ecx, ecx ; Error size
 
         ; Function epilogue
         mov esp, ebp
@@ -118,9 +128,62 @@ section .text
             ret
 
         parseAsciiToInt_error_invalidInput2:
-            parseAsciiToInt_error_invalidInput2_message db "Please, give a correct integer length, can't be null or ", 0Ah, 0
+            parseAsciiToInt_error_invalidInput2_message db "Please, give a correct integer length, can't be 0 or negative", 0Ah, 0
             parseAsciiToInt_error_invalidInput2_messageLength equ $ - parseAsciiToInt_error_invalidInput2_message
 
             mov ebx, parseAsciiToInt_error_invalidInput2_message
             mov ecx, parseAsciiToInt_error_invalidInput2_messageLength
+            ret
+
+    global parseIntToAscii
+    parseIntToAscii:
+        ; Function prologue
+        push ebp
+        mov ebp, esp
+
+        ; Accessing parameters from stack
+        mov eax, [ebp + 8]  ; Integer address
+        mov edx, [ebp + 12]  ; Integer length
+
+        ; Input validation
+        cmp edx, 0
+        jle parseIntToAscii_error_invalidInput2
+
+        cmp edx, 4
+        jg parseIntToAscii_error_invalidInput2
+
+        ; Get value
+        mov esi, eax
+        mov ecx, edx
+        xor eax, eax
+        xor edx, edx
+        parseIntToAscii_loop_getMultiByteValue:
+            mov dl, [esi]
+            shl eax, 8
+            add eax, edx
+            inc esi
+            dec ecx
+            jnz parseIntToAscii_loop_getMultiByteValue
+        
+        ; Get Integer array
+
+        ; Parse Integer array to Ascii array
+
+        ; Return values
+        mov eax, ebx ; Int value
+        xor ebx, ebx ; Error desc
+        mov edx, ecx ; Int size
+
+        ; Function epilogue
+        mov esp, ebp
+        pop ebp
+        ret
+
+        ; Errors
+        parseIntToAscii_error_invalidInput2:
+            parseIntToAscii_error_invalidInput2_message db "Please, give a correct integer length, can't be 0, negative or higher than 4 bytes", 0Ah, 0
+            parseIntToAscii_error_invalidInput2_messageLength equ $ - parseIntToAscii_error_invalidInput2_message
+
+            mov ebx, parseIntToAscii_error_invalidInput2_message
+            mov ecx, parseIntToAscii_error_invalidInput2_messageLength
             ret
