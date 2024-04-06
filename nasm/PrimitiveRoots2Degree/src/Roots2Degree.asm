@@ -2,6 +2,8 @@ section .text
     global _start
     extern parseAsciiToInt
 
+include '../../WLib/include/WLib.inc'
+
 _start:
 
     ; Reads A
@@ -15,12 +17,14 @@ _start:
     push aBuffer
     call parseAsciiToInt
 
+    ; Reads B
     mov eax, 3h
     mov ebx, 0h
     mov ecx, bBuffer
     mov edx, bBufferSize
     int 80h
     
+    ; Reads C
     mov eax, 3h
     mov ebx, 0h
     mov ecx, cBuffer
