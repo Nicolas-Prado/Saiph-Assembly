@@ -24,6 +24,12 @@ section .text
         mov eax, [ebp + 8]  ; String address
         mov edx, [ebp + 12]  ; String length
 
+        mov eax, 0x04
+        mov ebx, 1
+        mov ecx, eax
+        mov edx, edx
+        int 0x80
+
         ; Input validation
         cmp edx, 0
         jle parseStringToInt_error_invalidInput2

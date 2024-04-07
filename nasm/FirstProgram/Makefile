@@ -1,5 +1,5 @@
 # Parameters used by the compiler and linker
-NASMPARAMS = -f elf32
+NASMPARAMS = -iinclude/ -f elf32
 LDPARAMS = -m elf_i386
 PROJECT_NAME = $(notdir $(CURDIR))
 
