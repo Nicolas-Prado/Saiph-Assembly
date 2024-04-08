@@ -4,14 +4,14 @@ section .text
 %include "../../WLib/include/WLib.inc"
 
 _start:
-    mov eax, 3h
-    mov ebx, 0h
+    mov eax, 3
+    mov ebx, 0
     mov ecx, buffer
     mov edx, 4
     int 80h
 
     push 3
-    push buffer
+    push dword buffer
     call parseStringToInt
 
     mov eax, 1

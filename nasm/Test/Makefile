@@ -4,7 +4,8 @@ LDPARAMS = -m elf_i386
 PROJECT_NAME = $(notdir $(CURDIR))
 
 # List of objects to link for executable creation
-objects = $(patsubst src/%.asm,build/%.o,$(wildcard src/*.asm))
+libraries = ../WLib/build/WLib.o
+objects = $(patsubst src/%.asm,build/%.o,$(wildcard src/*.asm)) $(libraries)
 
 # Compile code
 build/%.o: src/%.asm

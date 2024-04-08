@@ -1,4 +1,4 @@
-; Standard library of Worcnaz Kyouma Prado A.
+ ; Standard library of Worcnaz Kyouma Prado A.
 ; Begin to made in: 31/03/2024
 ; Author: Watashi, nikorasu arumeida purado
 
@@ -24,12 +24,6 @@ section .text
         mov eax, [ebp + 8]  ; String address
         mov edx, [ebp + 12]  ; String length
 
-        mov eax, 0x04
-        mov ebx, 1
-        mov ecx, eax
-        mov edx, edx
-        int 0x80
-
         ; Input validation
         cmp edx, 0
         jle parseStringToInt_error_invalidInput2
@@ -38,6 +32,7 @@ section .text
         push eax
         mov esi, eax
         xor ecx, ecx
+
         parseStringToInt_loop_asciiParse:
             mov al, [esi]
 
@@ -56,6 +51,13 @@ section .text
             inc ecx
             cmp ecx, edx
             jb parseStringToInt_loop_asciiParse
+
+        ; Debug
+        ;mov eax, 4
+        ;mov ebx, 1
+        ;mov ecx, esi
+        ;mov edx, edx
+        ;int 0x80
 
         ; Sum of the binary numbers
         xor eax, eax ; Temporary number tenPotency
@@ -120,6 +122,7 @@ section .text
 
         ; Errors
         parseStringToInt_error_invalidInput1:
+            pop esi ;Push no processo!
             parseStringToInt_error_invalidInput1_message db "Please, give a correct integer number", 0Ah, 0
             parseStringToInt_error_invalidInput1_messageLength equ $ - parseStringToInt_error_invalidInput1_message
 
@@ -245,6 +248,8 @@ section .text
 
 section .data
     ; Constants
+    testvr db "debug", 0Ah, 0
+    testvrlength equ $ - testvr
 
 section .bss
     ; Variables
