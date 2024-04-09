@@ -36,6 +36,11 @@ section .text
         parseStringToInt_loop_asciiParse:
             mov al, [esi]
 
+            cmp al, 00000000b
+            jne parseStringToInt_conditional_noParseZero
+            mov al, 00110000b
+            parseStringToInt_conditional_noParseZero:
+
             cmp al, '0'
             jb parseStringToInt_error_invalidInput1
 
@@ -51,15 +56,6 @@ section .text
             inc ecx
             cmp ecx, edx
             jb parseStringToInt_loop_asciiParse
-
-        ; Debug
-        pusha
-        mov eax, 4
-        mov ebx, 1
-        mov ecx, [ebp + 8]
-        mov edx, [ebp + 12]
-        int 0x80
-        popa
 
         ; Sum of the binary numbers
         xor eax, eax ; Temporary number tenPotency
@@ -124,15 +120,6 @@ section .text
 
         ; Errors
         parseStringToInt_error_invalidInput1:
-            ; Debug
-            pusha
-            mov eax, 4
-            mov ebx, 1
-            mov ecx, debugTest
-            mov edx, debugTestlength
-            int 0x80
-            popa
-
             pop esi ;Push no processo! Veja no loop
 
             mov ebx, parseStringToInt_error_invalidInput1_message
