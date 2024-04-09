@@ -17,7 +17,7 @@ section .text
     global parseStringToInt
     parseStringToInt:
         ; Function prologue
-        push ebp
+        push eax
         mov ebp, esp
 
         ; Accessing parameters from stack
@@ -53,11 +53,13 @@ section .text
             jb parseStringToInt_loop_asciiParse
 
         ; Debug
-        ;mov eax, 4
-        ;mov ebx, 1
-        ;mov ecx, esi
-        ;mov edx, edx
-        ;int 0x80
+        pusha
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, [ebp + 8]
+        mov edx, [ebp + 12]
+        int 0x80
+        popa
 
         ; Sum of the binary numbers
         xor eax, eax ; Temporary number tenPotency
@@ -122,20 +124,32 @@ section .text
 
         ; Errors
         parseStringToInt_error_invalidInput1:
-            pop esi ;Push no processo!
-            parseStringToInt_error_invalidInput1_message db "Please, give a correct integer number", 0Ah, 0
-            parseStringToInt_error_invalidInput1_messageLength equ $ - parseStringToInt_error_invalidInput1_message
+            ; Debug
+            pusha
+            mov eax, 4
+            mov ebx, 1
+            mov ecx, debugTest
+            mov edx, debugTestlength
+            int 0x80
+            popa
+
+            pop esi ;Push no processo! Veja no loop
 
             mov ebx, parseStringToInt_error_invalidInput1_message
             mov ecx, parseStringToInt_error_invalidInput1_messageLength
+
+            ; Function epilogue
+            mov esp, ebp
+            pop ebp
             ret
 
         parseStringToInt_error_invalidInput2:
-            parseStringToInt_error_invalidInput2_message db "Please, give a correct integer length, can't be 0 or negative", 0Ah, 0
-            parseStringToInt_error_invalidInput2_messageLength equ $ - parseStringToInt_error_invalidInput2_message
-
             mov ebx, parseStringToInt_error_invalidInput2_message
             mov ecx, parseStringToInt_error_invalidInput2_messageLength
+
+            ; Function epilogue
+            mov esp, ebp
+            pop ebp
             ret
 
     ; Desc: Integer to String ASCII
@@ -160,10 +174,10 @@ section .text
 
         ; Input validation
         cmp edx, 0
-        jle parseIntToString_error_invalidInput2
+        jle parseIntToString_error_invalidInput1
 
         cmp edx, 4
-        jg parseIntToString_error_invalidInput2
+        jg parseIntToString_error_invalidInput1
 
         ; Get value
         mov esi, eax
@@ -238,21 +252,37 @@ section .text
         ret
 
         ; Errors
-        parseIntToString_error_invalidInput2:
-            parseIntToString_error_invalidInput2_message db "Please, give a correct integer length, can't be 0, negative or higher than 4 bytes", 0Ah, 0
-            parseIntToString_error_invalidInput2_messageLength equ $ - parseIntToString_error_invalidInput2_message
-
-            mov ebx, parseIntToString_error_invalidInput2_message
-            mov ecx, parseIntToString_error_invalidInput2_messageLength
+        parseIntToString_error_invalidInput1:
+            mov ebx, parseIntToString_error_invalidInput1_message
+            mov ecx, parseIntToString_error_invalidInput1_messageLength
             ret
 
 section .data
-    ; Constants
-    testvr db "debug", 0Ah, 0
-    testvrlength equ $ - testvr
+    ; Debug data
+    debugTest db "debug", 0Ah, 0
+    debugTestlength equ $ - debugTest
+
+    ; Debug
+    ; pusha
+    ; mov eax, 4
+    ; mov ebx, 1
+    ; mov ecx, debugTest
+    ; mov edx, debugTestlength
+    ; int 0x80
+    ; popa
+
+    ; Errors
+    parseStringToInt_error_invalidInput1_message db "Please, give a correct integer number", 0Ah, 0
+    parseStringToInt_error_invalidInput1_messageLength equ $ - parseStringToInt_error_invalidInput1_message
+
+    parseStringToInt_error_invalidInput2_message db "Please, give a correct integer length, can't be 0 or negative", 0Ah, 0
+    parseStringToInt_error_invalidInput2_messageLength equ $ - parseStringToInt_error_invalidInput2_message
+
+    parseIntToString_error_invalidInput1_message db "Please, give a correct integer length, can't be 0, negative or higher than 4 bytes", 0Ah, 0
+    parseIntToString_error_invalidInput1_messageLength equ $ - parseIntToString_error_invalidInput1_message
 
 section .bss
-    ; Variables
+    ; Unitialized variables
 
     ; parseIntToString
     parseIntToString_pointer_inversedDigitArray resb 10

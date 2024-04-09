@@ -19,6 +19,7 @@ _start:
     int 0x80
 
 section .data
+    buffer dd 0
 
 section .bss
-    buffer resb 4
+    ;buffer resb 4
