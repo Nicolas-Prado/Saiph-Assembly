@@ -242,6 +242,10 @@ section .text
         parseIntToString_error_invalidInput1:
             mov ebx, parseIntToString_error_invalidInput1_message
             mov ecx, parseIntToString_error_invalidInput1_messageLength
+            
+            ; Function epilogue
+            mov esp, ebp
+            pop ebp
             ret
 
 section .data
