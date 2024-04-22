@@ -31,9 +31,10 @@ parseIntToString:
     xor ecx, ecx
     mov esi, inversedString
     mov eax, ebx
+    mov ebx, 10
     .loop_intToInversedString:
-        mov edx, 10
-        div edx
+        xor edx, edx
+        div ebx
 
         add edx, 00110000b
 

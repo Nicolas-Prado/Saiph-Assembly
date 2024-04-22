@@ -14,10 +14,16 @@ _start:
     push buffer
     call parseStringToInt
 
+    push eax
+    call parseIntToString
+
     ; Syscall 0x03, to read string from user, is terminate by a space, the space is too inserted in the buffer
     ; If rest some data from the input that are not saved in memory, it will overflow out of the program! You
     ; can test it by making a full string and click enter, it will finish the string and overflow the enter to 
     ; the cmd
+
+    ; IT WORKEDDDDDDDDDDDDDDDDDDDD
+    ; IHUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     ;push 3
     ;push dword buffer
