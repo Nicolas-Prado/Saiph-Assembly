@@ -3,11 +3,16 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <any>
 
-class ActionResponse{
+using DataType = std::unordered_map<std::string, std::any>;
+
+class ActionResponse {
 public:
-    std::vector<std::string> responses;
+    std::vector<std::string> messages;
+    DataType data;
 
-    ActionResponse(std::vector<std::string>);
+    ActionResponse(std::vector<std::string>, DataType);
 };
 #endif

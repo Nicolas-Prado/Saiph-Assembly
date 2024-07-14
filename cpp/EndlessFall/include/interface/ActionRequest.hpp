@@ -2,12 +2,12 @@
 #define EF_ACTIONREQUEST_H
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <any>
 
-using ParamsType = std::map<std::string, std::any>;
+using ParamsType = std::unordered_map<std::string, std::any>;
 
-class ActionRequest{
+class ActionRequest {
 public:
     std::string name;
     std::string descriptor;
