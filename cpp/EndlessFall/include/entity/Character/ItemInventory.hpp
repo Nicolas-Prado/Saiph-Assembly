@@ -4,9 +4,11 @@
 #include "Item.hpp"
 
 class ItemInventory {
-private:
+public:
     Item item;
     int quantity;
+
+    ItemInventory(Item, int);
 };
 
 #endif

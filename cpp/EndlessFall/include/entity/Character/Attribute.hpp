@@ -11,12 +11,12 @@ enum class AttributeName {
 };
 
 private:
-    const static std::unordered_map<Attribute, std::string> attributeNameStringMap;
-    AttributeName name;
+    const static std::unordered_map<AttributeName, std::string> attributeNameStringMap;
 public:
+    Attribute(AttributeName, int potency);
+    AttributeName name;
     int potency;
 
-    void setName(AttributeName);
-    std::string getName();
+    std::string getStringName();
 };
 #endif

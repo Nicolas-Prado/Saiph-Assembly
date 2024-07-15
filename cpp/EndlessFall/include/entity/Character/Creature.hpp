@@ -12,6 +12,6 @@ private:
     float healthPoints;
     std::vector<Attribute> attributes;
 public:
-    Creature(std::string, float, std::vector<Attribute>);
+    Creature(const std::string&, float, std::vector<Attribute>);
 };
 #endif
