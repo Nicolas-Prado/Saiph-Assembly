@@ -1,20 +1,25 @@
 # Parameters used by the compiler and linker
 NASMPARAMS = -iinclude/ -f elf32
-LDPARAMS = -m elf_i386
+LDPARAMS = -m elf_i386 -r
 PROJECT_NAME = $(notdir $(CURDIR))
 
 # List of objects to link for executable creation
 objects = $(patsubst src/%.asm,build/%.o,$(wildcard src/*.asm))
 
 # Compile code library
-build: src/$(PROJECT_NAME).asm
+build/%.o: src/%.asm
 	mkdir -p build
-	nasm $(NASMPARAMS) -o build/$(PROJECT_NAME).o $<
+	nasm $(NASMPARAMS) -o $@ $<
+
+# Link objects
+build: $(objects)
+	mkdir -p bin
+	ld $(LDPARAMS) -o bin/$(PROJECT_NAME).o $(objects)
 
 # Clean the project
 .PHONY: clean
 clean:
-	rm -f $(objects)
+	rm -f $(objects) bin/$(PROJECT_NAME).o
 
 # Em makefiles, a syntax $(some_function operand1,operand2,...) 
 # denota uma invocação de função dentro do Makefile. Aqui, por exemplo, temos:
