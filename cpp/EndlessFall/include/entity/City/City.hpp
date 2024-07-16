@@ -11,7 +11,8 @@ private:
     std::array<Building, 1> buildings;
 
 public:
-    Building gotoBuilding(std::string);
+    City(std::array<Building, 1>);
+    Building gotoBuilding(Building::BuildingType);
 };
 
 #endif

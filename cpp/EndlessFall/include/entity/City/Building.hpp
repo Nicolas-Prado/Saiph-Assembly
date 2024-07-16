@@ -7,8 +7,15 @@
 
 class Building {
 public:
+    enum class BuildingType {
+        Shop
+    };
+
     std::string name;
-    Character user;
+    BuildingType type;
+//    Character user;
+
+    Building(BuildingType, const std::string&);
 };
 
 #endif
