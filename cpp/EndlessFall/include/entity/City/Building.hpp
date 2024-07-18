@@ -13,7 +13,6 @@ public:
 
     std::string name;
     BuildingType type;
-//    Character user;
 
     Building(BuildingType, const std::string&);
 };

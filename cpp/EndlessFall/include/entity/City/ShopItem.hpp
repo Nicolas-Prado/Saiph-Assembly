@@ -1,12 +1,12 @@
-#ifndef EF_SERVICEITEM_H
-#define EF_SERVICEITEM_H
+#ifndef EF_SHOPITEM_H
+#define EF_SHOPITEM_H
 
 #include <vector>
 
 #include "Service.hpp"
 #include "ItemComercial.hpp"
 
-class ServiceItem : public Service {
+class ShopItem : public Service {
 public:
     std::vector<ItemComercial> itens;
 };

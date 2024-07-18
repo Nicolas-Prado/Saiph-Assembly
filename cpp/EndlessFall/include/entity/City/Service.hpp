@@ -7,6 +7,8 @@
 
 class Service {
 public:
+    Service(const std::string&, Gold, bool);
+
     std::string description;
     Gold cost;
     bool userService;

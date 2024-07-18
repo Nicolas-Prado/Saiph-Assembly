@@ -8,10 +8,10 @@
 
 class City {
 private:
-    std::array<Building, 1> buildings;
+    std::array<Building*, 1> buildings;
 
 public:
-    City(std::array<Building, 1>);
+    City(std::array<Building*, 1>);
     Building gotoBuilding(Building::BuildingType);
 };
 

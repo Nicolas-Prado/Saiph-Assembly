@@ -9,11 +9,13 @@
 
 class ServiceBuilding : public Building {
 private:
-    std::vector<Service> services;
+    std::vector<Service*> services;
 
 public:
-    Gold sellService(Service);
-    Service buyService(Gold);
+    ServiceBuilding(BuildingType, const std::string&, std::vector<Service*>);
+
+    virtual Service* buyService(const std::string&, Gold);
+    virtual Gold sellService(const std::string&);
 };
 
 #endif

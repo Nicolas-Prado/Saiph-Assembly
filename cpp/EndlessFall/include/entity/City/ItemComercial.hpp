@@ -4,10 +4,11 @@
 #include "Types.hpp"
 #include "Item.hpp"
 
-class ItemComercial {
+class ItemComercial : public Service {
 public:
+    ItemComercial(const std::string&, Gold, bool, const Item&);
+
     Item item;
-    Gold cost;
 };
 
 #endif

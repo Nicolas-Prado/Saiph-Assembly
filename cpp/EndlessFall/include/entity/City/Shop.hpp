@@ -8,11 +8,11 @@
 #include "ServiceBuilding.hpp"
 
 class Shop : public ServiceBuilding {
-private:
-    std::vector<ItemComercial> itens;
 public:
-    Item buyItem(std::string name);
-    Gold sellItem(std::string name);
+    Shop(BuildingType, const std::string&, std::vector<ItemComercial*>);
+
+    ItemComercial* buyService(const std::string&, Gold) override;
+    Gold sellService(const std::string&) override;
 };
 
 #endif
