@@ -1,1 +1,0 @@
-# Sigma makefile, waiting for its shinny implementation
