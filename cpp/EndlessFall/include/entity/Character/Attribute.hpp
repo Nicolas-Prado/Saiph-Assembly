@@ -1,9 +1,6 @@
 #ifndef EF_ATTRIBUTE_H
 #define EF_ATTRIBUTE_H
 
-#include <string>
-#include <unordered_map>
-
 class Attribute {
 enum class AttributeName {
     Strength,
@@ -11,12 +8,12 @@ enum class AttributeName {
 };
 
 private:
-    const static std::unordered_map<AttributeName, std::string> attributeNameStringMap;
+    const static std::unordered_map<AttributeName, char*> attributeNameStringMap;
 public:
     Attribute(AttributeName, int potency);
     AttributeName name;
     int potency;
 
-    std::string getStringName();
+    char* getStringName();
 };
 #endif
